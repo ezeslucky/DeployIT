@@ -14,7 +14,7 @@ COPY main.sh main.sh
 COPY script.ts script.ts
 COPY package*.json .
 
-RUN npm install
+RUN yarn install
 
 RUN chmod +x main.sh
 RUN chmod +x script.ts
