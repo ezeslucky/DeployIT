@@ -8,7 +8,7 @@ import Redis from 'ioredis';
 const PROJECT_ID: string = process.env.PROJECT_ID || 'default_project_id';
 const S3_BUCKET_NAME = 'deploytclone';
 
-const redisUrl = process.env.REDIS_URL || ''; // Load from env
+const redisUrl = process.env.REDIS_URL || ''; 
 const publisher = new Redis(redisUrl);
 
 const s3Client = new S3Client({
