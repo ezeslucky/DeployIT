@@ -1,5 +1,5 @@
 #!/bin/bash
-install_dockly() {
+install_deployit() {
     if [ "$(id -u)" != "0" ]; then
         echo "This script must be run as root" >&2
         exit 1
@@ -96,34 +96,34 @@ install_dockly() {
 
     echo "Swarm initialized"
 
-    docker network rm -f dockly-network 2>/dev/null
-    docker network create --driver overlay --attachable dockly-network
+    docker network rm -f deployit-network 2>/dev/null
+    docker network create --driver overlay --attachable deployit-network
 
     echo "Network created"
 
-    mkdir -p /etc/dockly
+    mkdir -p /etc/deployit
 
-    chmod 777 /etc/dockly
+    chmod 777 /etc/deployit
 
     docker pull postgres:16
     docker pull redis:7
     docker pull traefik:v3.1.2
-    docker pull dockly/dockly:latest
+    docker pull deployit/deployit:latest
 
     # Installation
     docker service create \
-      --name dockly \
+      --name deployit \
       --replicas 1 \
-      --network dockly-network \
+      --network deployit-network \
       --mount type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock \
-      --mount type=bind,source=/etc/dockly,target=/etc/dockly \
-      --mount type=volume,source=dockly-docker-config,target=/root/.docker \
+      --mount type=bind,source=/etc/deployit,target=/etc/deployit \
+      --mount type=volume,source=deployit-docker-config,target=/root/.docker \
       --publish published=3000,target=3000,mode=host \
       --update-parallelism 1 \
       --update-order stop-first \
       --constraint 'node.role == manager' \
       -e ADVERTISE_ADDR=$advertise_addr \
-      dockly/dockly:latest
+      deployit/deployit:latest
 
     GREEN="\033[0;32m"
     YELLOW="\033[1;33m"
@@ -143,26 +143,26 @@ install_dockly() {
 
     formatted_addr=$(format_ip_for_url "$advertise_addr")
     echo ""
-    printf "${GREEN}Congratulations, dockly is installed!${NC}\n"
+    printf "${GREEN}Congratulations, deployit is installed!${NC}\n"
     printf "${BLUE}Wait 15 seconds for the server to start${NC}\n"
     printf "${YELLOW}Please go to http://${formatted_addr}:3000${NC}\n\n"
 }
 
-update_dockly() {
-    echo "Updating dockly..."
+update_deployit() {
+    echo "Updating deployit..."
     
     # Pull the latest image
-    docker pull dockly/dockly:latest
+    docker pull deployit/deployit:latest
 
     # Update the service
-    docker service update --image dockly/dockly:latest dockly
+    docker service update --image deployit/deployit:latest deployit
 
-    echo "dockly has been updated to the latest version."
+    echo "deployit has been updated to the latest version."
 }
 
 # Main script execution
 if [ "$1" = "update" ]; then
-    update_dockly
+    update_deployit
 else
-    install_dockly
+    install_deployit
 fi

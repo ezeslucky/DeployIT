@@ -9,7 +9,7 @@ import { setRequestLocale } from "next-intl/server";
 export const metadata: Metadata = {
 	// metadataBase: new URL(""),
 	title: {
-		default: "Dockly - Effortless Deployment Solutions",
+		default: "deployit - Effortless Deployment Solutions",
 		template: "%s | Simplify Your DevOps",
 	},
 	icons: {
@@ -23,8 +23,8 @@ export const metadata: Metadata = {
 		},
 	},
 	description:
-		"Streamline your deployment process with Dockly. Effortlessly manage applications and databases on any VPS using Docker and Traefik for improved performance and security.",
-	applicationName: "Dockly",
+		"Streamline your deployment process with deployit. Effortlessly manage applications and databases on any VPS using Docker and Traefik for improved performance and security.",
+	applicationName: "deployit",
 	keywords: [
 		
 		"Docker",
@@ -42,10 +42,10 @@ export const metadata: Metadata = {
 	openGraph: {
 		type: "website",
 		url: "",
-		title: "Dockly - Effortless Deployment Solutions",
+		title: "deployit - Effortless Deployment Solutions",
 		description:
-			"Simplify your DevOps with Dockly. Deploy applications and manage databases efficiently on any VPS.",
-		siteName: "Dockly",
+			"Simplify your DevOps with deployit. Deploy applications and manage databases efficiently on any VPS.",
+		siteName: "deployit",
 		images: [
 			{
 				url: "/og.png",
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
 				url: "/icon.svg",
 				width: 24,
 				height: 24,
-				alt: "Dockly Logo",
+				alt: "deployit Logo",
 			},
 		],
 	},
@@ -62,9 +62,9 @@ export const metadata: Metadata = {
 		card: "summary_large_image",
 		site: "@ezeslucky",
 		creator: "@ezeslucky",
-		title: "Dockly ",
+		title: "deployit ",
 		description:
-			"Dockly applications and manage databases with ease using Dockly. Learn how our platform can elevate your infrastructure management.",
+			"deployit applications and manage databases with ease using deployit. Learn how our platform can elevate your infrastructure management.",
 		images: "/og.png",
 	},
 };
