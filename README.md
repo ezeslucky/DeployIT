@@ -7,8 +7,8 @@
 To get started, clone the repository and install dependencies:
 
 ```bash
-git clone https://github.com/ezeslucky/DeployIT.git
-cd DeployIT 
+git clone https://github.com/ezeslucky/deployit.git
+cd deployit
 
 ```
 
