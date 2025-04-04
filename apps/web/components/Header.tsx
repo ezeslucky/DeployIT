@@ -132,7 +132,7 @@ function MobileNavigation() {
 						<MobileNavLink href={linkT("docs.intro")} target="_blank">
 							<Button className=" w-full" asChild>
 								<Link
-									href="../dockly/register"
+									href="../deployit/register"
 									aria-label="Sign In "
 									target="_blank"
 								>
@@ -189,7 +189,7 @@ export function Header() {
 
 						<Button className="rounded-full max-md:hidden" asChild>
 							<Link
-								href="../dockly/register"
+								href="../deployit/register"
 								aria-label="Sign In "
 								target="_blank"
 							>

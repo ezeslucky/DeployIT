@@ -23,7 +23,7 @@
 		/* Path Aliases */
 		"baseUrl": ".",
 		"paths": {
-			"@dockly/server/*": ["./src/*"]
+			"@deployit/server/*": ["./src/*"]
 		}
 	},
 	"include": ["next-env.d.ts", "./src/**/*.ts"],

@@ -1,6 +1,6 @@
-# Dockly Website
+# deployit Website
 
-Main Landing Page of Dockly
+Main Landing Page of deployit
 
 Run development server:
 

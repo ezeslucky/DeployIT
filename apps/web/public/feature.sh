@@ -1,5 +1,5 @@
 #!/bin/bash
-install_dockly() {
+install_deployit() {
     if [ "$(id -u)" != "0" ]; then
         echo "This script must be run as root" >&2
         exit 1
@@ -97,59 +97,59 @@ install_dockly() {
 
     echo "Swarm initialized"
 
-    docker network rm -f dockly-network 2>/dev/null
-    docker network create --driver overlay --attachable dockly-network
+    docker network rm -f deployit-network 2>/dev/null
+    docker network create --driver overlay --attachable deployit-network
 
     echo "Network created"
 
-    mkdir -p /etc/dockly
+    mkdir -p /etc/deployit
 
-    chmod 777 /etc/dockly
+    chmod 777 /etc/deployit
 
     docker service create \
-    --name dockly-postgres \
+    --name deployit-postgres \
     --constraint 'node.role==manager' \
-    --network dockly-network \
-    --env POSTGRES_USER=dockly \
-    --env POSTGRES_DB=dockly \
+    --network deployit-network \
+    --env POSTGRES_USER=deployit \
+    --env POSTGRES_DB=deployit \
     --env POSTGRES_PASSWORD=amukds4wi9001583845717ad2 \
-    --mount type=volume,source=dockly-postgres-database,target=/var/lib/postgresql/data \
+    --mount type=volume,source=deployit-postgres-database,target=/var/lib/postgresql/data \
     postgres:16
 
 
     docker service create \
-    --name dockly-redis \
+    --name deployit-redis \
     --constraint 'node.role==manager' \
-    --network dockly-network \
+    --network deployit-network \
     --mount type=volume,source=redis-data-volume,target=/data \
     redis:7
 
     docker pull traefik:v3.1.2
-    docker pull dockly/dockly:feature
+    docker pull deployit/deployit:feature
 
     # Installation
     docker service create \
-      --name dockly \
+      --name deployit \
       --replicas 1 \
-      --network dockly-network \
+      --network deployit-network \
       --mount type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock \
-      --mount type=bind,source=/etc/dockly,target=/etc/dockly \
-      --mount type=volume,source=dockly-docker-config,target=/root/.docker \
+      --mount type=bind,source=/etc/deployit,target=/etc/deployit \
+      --mount type=volume,source=deployit-docker-config,target=/root/.docker \
       --publish published=3000,target=3000,mode=host \
       --update-parallelism 1 \
       --update-order stop-first \
       --constraint 'node.role == manager' \
       -e RELEASE_TAG=feature \
       -e ADVERTISE_ADDR=$advertise_addr \
-      dockly/dockly:feature
+      deployit/deployit:feature
 
 
     docker run -d \
-    --name dockly-traefik \
-    --network dockly-network \
+    --name deployit-traefik \
+    --network deployit-network \
     --restart always \
-    -v /etc/dockly/traefik/traefik.yml:/etc/traefik/traefik.yml \
-    -v /etc/dockly/traefik/dynamic:/etc/dockly/traefik/dynamic \
+    -v /etc/deployit/traefik/traefik.yml:/etc/traefik/traefik.yml \
+    -v /etc/deployit/traefik/dynamic:/etc/deployit/traefik/dynamic \
     -v /var/run/docker.sock:/var/run/docker.sock \
     -p 80:80/tcp \
     -p 443:443/tcp \
@@ -158,11 +158,11 @@ install_dockly() {
 
     # Optional: Use docker service create instead of docker run
     #   docker service create \
-    #     --name dockly-traefik \
+    #     --name deployit-traefik \
     #     --constraint 'node.role==manager' \
-    #     --network dockly-network \
-    #     --mount type=bind,source=/etc/dockly/traefik/traefik.yml,target=/etc/traefik/traefik.yml \
-    #     --mount type=bind,source=/etc/dockly/traefik/dynamic,target=/etc/dockly/traefik/dynamic \
+    #     --network deployit-network \
+    #     --mount type=bind,source=/etc/deployit/traefik/traefik.yml,target=/etc/traefik/traefik.yml \
+    #     --mount type=bind,source=/etc/deployit/traefik/dynamic,target=/etc/deployit/traefik/dynamic \
     #     --mount type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock \
     #     --publish mode=host,published=443,target=443 \
     #     --publish mode=host,published=80,target=80 \
@@ -188,27 +188,27 @@ install_dockly() {
 
     formatted_addr=$(format_ip_for_url "$advertise_addr")
     echo ""
-    printf "${GREEN}Congratulations, dockly is installed!${NC}\n"
+    printf "${GREEN}Congratulations, deployit is installed!${NC}\n"
     printf "${BLUE}Wait 15 seconds for the server to start${NC}\n"
     printf "${YELLOW}Please go to http://${formatted_addr}:3000${NC}\n\n"
     echo ""
 }
 
-update_dockly() {
-    echo "Updating dockly..."
+update_deployit() {
+    echo "Updating deployit..."
     
     # Pull the latest feature image
-    docker pull dockly/dockly:feature
+    docker pull deployit/deployit:feature
 
     # Update the service
-    docker service update --image dockly/dockly:feature dockly
+    docker service update --image deployit/deployit:feature deployit
 
-    echo "dockly has been updated to the latest feature version."
+    echo "deployit has been updated to the latest feature version."
 }
 
 # Main script execution
 if [ "$1" = "update" ]; then
-    update_dockly
+    update_deployit
 else
-    install_dockly
+    install_deployit
 fi

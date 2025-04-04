@@ -40,8 +40,8 @@ export function CallToAction() {
 
 					<Button className="mt-10 rounded-full" asChild>
 						<Link
-							href={"../dockly/register"}
-							aria-label="Dockly on GitHub"
+							href={"../deployit/register"}
+							aria-label="deployit on GitHub"
 							target="_blank"
 							className="flex flex-row items-center gap-2"
 						>
