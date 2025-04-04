@@ -44,4 +44,4 @@ git push origin feature-name
 ---
 ### 6. Submit a Pull Request
 Go to the original repository and create a Pull Request (PR), explaining your changes.
-For more details, check [Issues](https://github.com/ezeslucky/DeployIT/issues) and [Pull Requests](https://github.com/ezeslucky/DeployIT/pulls).
+For more details, check [Issues](https://github.com/ezeslucky/deployit/issues) and [Pull Requests](https://github.com/ezeslucky/deployit/pulls).
