@@ -9,7 +9,7 @@
 		"start": "node -r dotenv/config dist/server.mjs",
 		"build-server": "tsx esbuild.config.ts",
 		"build-next": "next build",
-		"setup": "tsx -r dotenv/config setup.ts && sleep 5 && pnpm run migration:run",
+		"setup": "tsx -r dotenv/config setup.ts && sleep 5 && yarn run migration:run",
 		"reset-password": "node -r dotenv/config dist/reset-password.mjs",
 		"dev": "tsx -r dotenv/config ./server/server.ts  --project tsconfig.server.json ",
 		"dev-turbopack": "TURBOPACK=1 tsx -r dotenv/config ./server/server.ts  --project tsconfig.server.json",
@@ -188,7 +188,7 @@
 	"packageManager": "yarn@1.22.22",
 	"engines": {
 		"node": "^20.9.0",
-		"pnpm": ">=9.5.0"
+		"yarn": ">=9.5.0"
 	},
 	"lint-staged": {
 		"*": [
