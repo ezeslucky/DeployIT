@@ -23,7 +23,7 @@
     "build:types": "tsc --emitDeclarationOnly --experimenta-dts",
     "switch:dev": "node scripts/switchToSrc.js",
     "switch:prod": "node scripts/switchToDist.js",
-    "dev": "rm -rf ./dist && pnpm esbuild && tsc --emitDeclarationOnly --outDir dist -p tsconfig.server.json",
+    "dev": "rm -rf ./dist && yarn esbuild && tsc --emitDeclarationOnly --outDir dist -p tsconfig.server.json",
     "esbuild": "tsx ./esbuild.config.ts && tsc --project tsconfig.server.json --emitDeclarationOnly ",
     "typecheck": "tsc --noEmit"
   },

@@ -1,6 +1,6 @@
 FROM node:18-slim AS base
-ENV PNPM_HOME="/pnpm"
-ENV PATH="$PNPM_HOME:$PATH"
+ENV yarn_HOME="/yarn"
+ENV PATH="$yarn_HOME:$PATH"
 RUN corepack enable
 
 FROM base AS build
@@ -11,16 +11,16 @@ WORKDIR /usr/src/app
 RUN apt-get update && apt-get install -y python3 make g++ git && rm -rf /var/lib/apt/lists/*
 
 # Install dependencies
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
+RUN --mount=type=cache,id=yarn,target=/yarn/store yarn install --frozen-lockfile
 
 # Build only the dokploy app
-RUN pnpm run dokploy:build 
+RUN yarn run dokploy:build 
 
 # Deploy only the dokploy app
-RUN pnpm deploy --filter=dokploy --prod /prod/dokploy
+RUN yarn deploy --filter=dokploy --prod /prod/dokploy
 
 FROM base AS dokploy
 COPY --from=build /prod/dokploy /prod/dokploy
 WORKDIR /prod/dokploy
 EXPOSE 3000
-CMD [ "pnpm", "start" ]
+CMD [ "yarn", "start" ]
